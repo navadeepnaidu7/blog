@@ -14,7 +14,7 @@
         title = siteConfig.title,
         description = siteConfig.description,
         canonical = siteConfig.url,
-        image = '/og-image.svg',
+        image = '/og-image.png',
         type = 'website',
         publishedTime = ''
     }: Props = $props();
