@@ -9,8 +9,18 @@
 <SEO />
 
 <div class="container">
+    <div class="home-intro">
+        <p>Hi, I'm <strong>Navadeep Naidu</strong>. I'm a software engineer who loves building things and thinking through problems. This is my corner of the internet where I write about technology, development, and life.</p>
+    </div>
+
+    <div class="intro-ornament">
+        <span class="ornament-dot"></span>
+        <span class="ornament-dot"></span>
+        <span class="ornament-dot"></span>
+    </div>
+
     <div class="page-header">
-        <h1 class="page-title">Writing</h1>
+        <h2 class="section-title">Recent Posts</h2>
     </div>
 
     {#if data.posts.length > 0}
