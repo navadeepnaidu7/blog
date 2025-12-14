@@ -1,11 +1,22 @@
 <script lang="ts">
     import ThemeToggle from './ThemeToggle.svelte';
     import { getAllCategories, getPostsByCategory } from '$lib/utils/posts';
+    import { page } from '$app/stores';
 
     let showCategories = $state(false);
     let categories = $state<{name: string, count: number}[]>([]);
     let isClosing = $state(false);
     let mobileMenuOpen = $state(false);
+
+    // Reactive current path
+    let currentPath = $derived($page.url.pathname);
+
+    function isActive(path: string): boolean {
+        if (path === '/blog') {
+            return currentPath === '/blog' || currentPath.startsWith('/category/');
+        }
+        return currentPath === path || currentPath.startsWith(path + '/');
+    }
 
     async function loadCategories() {
         const cats = await getAllCategories();
@@ -60,7 +71,15 @@
         <a href="/" class="site-logo">Navadeep Naidu</a>
         
         <div class="mobile-controls">
-            <ThemeToggle />
+            <div class="mobile-icons">
+                <a href="/rss.xml" class="icon-link" aria-label="RSS Feed">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="6.18" cy="17.82" r="2.18"/>
+                        <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+                    </svg>
+                </a>
+                <ThemeToggle />
+            </div>
             <button 
                 class="mobile-menu-btn" 
                 class:active={mobileMenuOpen}
@@ -74,7 +93,10 @@
         </div>
 
         <nav class="header-nav" class:open={mobileMenuOpen}>
-            <a href="/blog" onclick={closeMobileMenu}>All</a>
+            <a href="/blog" class:nav-active={isActive('/blog')} onclick={closeMobileMenu}>
+                All
+                <span class="nav-indicator"></span>
+            </a>
             <div class="categories-dropdown">
                 <button class="nav-btn" onclick={toggleCategories}>
                     Categories
@@ -96,7 +118,10 @@
                     </div>
                 {/if}
             </div>
-            <a href="/about" onclick={closeMobileMenu}>About</a>
+            <a href="/about" class:nav-active={isActive('/about')} onclick={closeMobileMenu}>
+                About
+                <span class="nav-indicator"></span>
+            </a>
             <div class="header-icons desktop-only">
                 <a href="/rss.xml" class="icon-link" aria-label="RSS Feed">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
