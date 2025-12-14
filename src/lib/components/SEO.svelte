@@ -14,13 +14,13 @@
         title = siteConfig.title,
         description = siteConfig.description,
         canonical = siteConfig.url,
-        image = '',
+        image = '/og-image.svg',
         type = 'website',
         publishedTime = ''
     }: Props = $props();
 
     const fullTitle = title === siteConfig.title ? title : `${title} | ${siteConfig.title}`;
-    const ogImage = image ? `${siteConfig.url}${image}` : '';
+    const ogImage = `${siteConfig.url}${image}`;
 </script>
 
 <svelte:head>
@@ -29,21 +29,19 @@
     <link rel="canonical" href={canonical} />
     
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={siteConfig.title} />
-    {#if ogImage}
-        <meta property="og:image" content={ogImage} />
-    {/if}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     {#if publishedTime}
         <meta property="article:published_time" content={publishedTime} />
     {/if}
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    {#if ogImage}
-        <meta name="twitter:image" content={ogImage} />
-    {/if}
+    <meta name="twitter:image" content={ogImage} />
 </svelte:head>
