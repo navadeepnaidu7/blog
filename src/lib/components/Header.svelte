@@ -5,6 +5,7 @@
     let showCategories = $state(false);
     let categories = $state<{name: string, count: number}[]>([]);
     let isClosing = $state(false);
+    let mobileMenuOpen = $state(false);
 
     async function loadCategories() {
         const cats = await getAllCategories();
@@ -41,7 +42,10 @@
         }
     }
 
-    let mobileMenuOpen = $state(false);
+    function closeMobileMenu() {
+        mobileMenuOpen = false;
+        closeCategories();
+    }
 </script>
 
 <svelte:window onclick={(e) => {
@@ -55,20 +59,22 @@
     <div class="header-inner">
         <a href="/" class="site-logo">Navadeep Naidu</a>
         
-        <button class="mobile-menu-btn" onclick={() => mobileMenuOpen = !mobileMenuOpen} aria-label="Toggle menu">
-            {#if mobileMenuOpen}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-            {:else}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18"/>
-                </svg>
-            {/if}
-        </button>
+        <div class="mobile-controls">
+            <ThemeToggle />
+            <button 
+                class="mobile-menu-btn" 
+                class:active={mobileMenuOpen}
+                onclick={() => mobileMenuOpen = !mobileMenuOpen} 
+                aria-label="Toggle menu"
+            >
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
 
         <nav class="header-nav" class:open={mobileMenuOpen}>
-            <a href="/blog" onclick={() => mobileMenuOpen = false}>All</a>
+            <a href="/blog" onclick={closeMobileMenu}>All</a>
             <div class="categories-dropdown">
                 <button class="nav-btn" onclick={toggleCategories}>
                     Categories
@@ -79,7 +85,7 @@
                 {#if showCategories}
                     <div class="dropdown-menu" class:closing={isClosing}>
                         {#each categories as cat}
-                            <a href="/category/{cat.name.toLowerCase()}" onclick={() => { closeCategories(); mobileMenuOpen = false; }}>
+                            <a href="/category/{cat.name.toLowerCase()}" onclick={closeMobileMenu}>
                                 <span>{cat.name}</span>
                                 <span class="count">{cat.count}</span>
                             </a>
@@ -90,8 +96,8 @@
                     </div>
                 {/if}
             </div>
-            <a href="/about" onclick={() => mobileMenuOpen = false}>About</a>
-            <div class="header-icons">
+            <a href="/about" onclick={closeMobileMenu}>About</a>
+            <div class="header-icons desktop-only">
                 <a href="/rss.xml" class="icon-link" aria-label="RSS Feed">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="6.18" cy="17.82" r="2.18"/>
