@@ -684,6 +684,7 @@ pre :global(.shiki) {
 
 .post-item:hover {
     transform: translateX(6px);
+    opacity: 0.9;
 }
 
 .post-item:hover .post-item-title {
@@ -691,8 +692,7 @@ pre :global(.shiki) {
 }
 
 .post-item:active {
-    transform: translateX(12px);
-    transition: transform 100ms ease;
+    opacity: 0.5;
 }
 
 .post-item-date {
@@ -998,6 +998,10 @@ pre :global(.shiki) {
 }
 
 @media (max-width: 768px) {
+    html {
+        zoom: 1;
+    }
+
     body {
         font-size: 17px;
     }
