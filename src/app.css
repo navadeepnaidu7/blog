@@ -1003,6 +1003,10 @@ pre :global(.shiki) {
 }
 
 @media (max-width: 768px) {
+    :root {
+        --padding-x: 16px;
+    }
+
     html {
         zoom: 1;
     }
