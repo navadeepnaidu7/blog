@@ -23,13 +23,15 @@ type GlobEntry = {
 };
 
 export async function getPosts(): Promise<Post[]> {
-    const modules = import.meta.glob<GlobEntry>('/src/content/posts/*.md', { eager: true });
+    const modules = import.meta.glob<GlobEntry>('/src/content/posts/*/index.md', { eager: true });
 
     const posts: Post[] = [];
 
     for (const path in modules) {
         const module = modules[path];
-        const slug = path.split('/').pop()?.replace('.md', '') || '';
+        // Extract slug from folder name: /src/content/posts/[slug]/index.md
+        const pathParts = path.split('/');
+        const slug = pathParts[pathParts.length - 2] || '';
         const metadata = module.metadata as PostMetadata;
 
         if (metadata.draft && import.meta.env.PROD) {
@@ -51,10 +53,12 @@ export async function getPosts(): Promise<Post[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<{ post: Post; component: unknown } | null> {
-    const modules = import.meta.glob<GlobEntry>('/src/content/posts/*.md', { eager: true });
+    const modules = import.meta.glob<GlobEntry>('/src/content/posts/*/index.md', { eager: true });
 
     for (const path in modules) {
-        const fileSlug = path.split('/').pop()?.replace('.md', '') || '';
+        // Extract slug from folder name: /src/content/posts/[slug]/index.md
+        const pathParts = path.split('/');
+        const fileSlug = pathParts[pathParts.length - 2] || '';
         if (fileSlug === slug) {
             const module = modules[path];
             const metadata = module.metadata as PostMetadata;

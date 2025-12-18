@@ -1,4 +1,5 @@
 import { createHighlighter } from 'shiki';
+import { remarkRelativeImages } from './src/lib/utils/remark-relative-images.js';
 
 const theme = 'github-dark-dimmed';
 const langs = ['javascript', 'typescript', 'python', 'bash', 'json', 'html', 'css', 'svelte', 'markdown', 'yaml', 'go'];
@@ -25,7 +26,7 @@ const config = {
     smartypants: {
         dashes: 'oldschool'
     },
-    remarkPlugins: [],
+    remarkPlugins: [remarkRelativeImages],
     rehypePlugins: []
 };
 

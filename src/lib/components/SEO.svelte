@@ -19,9 +19,10 @@
     publishedTime = "",
   }: Props = $props();
 
-  const fullTitle =
-    title === siteConfig.title ? title : `${title} | ${siteConfig.title}`;
-  const ogImage = `${siteConfig.url}${image}`;
+  const fullTitle = $derived(
+    title === siteConfig.title ? title : `${title} | ${siteConfig.title}`
+  );
+  const ogImage = $derived(`${siteConfig.url}${image}`);
 </script>
 
 <svelte:head>

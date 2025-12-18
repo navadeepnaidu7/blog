@@ -12,6 +12,7 @@ Welcome to my corner of the internet.
 
 This is where I write about things that interest me: technology, problem-solving, and the occasional life observation. I believe in clear thinking and simple expression.
 
+
 ## Why a Blog?
 
 In an age of tweets and short-form content, I wanted a space for longer, more considered writing. A place where I own my words and can think through ideas properly.
@@ -32,10 +33,10 @@ Here's a simple example to test syntax highlighting:
 
 ```typescript
 function greet(name: string): string {
-    return `Hello, ${name}!`;
+  return `Hello, ${name}!`;
 }
 
-console.log(greet('World'));
+console.log(greet("World"));
 ```
 
 Thanks for visiting.
