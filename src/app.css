@@ -1139,3 +1139,72 @@ pre :global(.shiki) {
         margin: -12px;
     }
 }
+
+/* RSS Button Styles */
+.rss-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-muted);
+    transition: color var(--transition);
+    padding: 8px;
+    margin: -8px;
+}
+
+.rss-btn:hover {
+    color: var(--color-fg);
+}
+
+.header-icons .rss-btn,
+.mobile-icons .rss-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.header-icons .rss-btn:hover,
+.mobile-icons .rss-btn:hover {
+    background-color: var(--color-hover-bg);
+}
+
+/* RSS Toast Notification */
+.rss-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background-color: var(--color-fg);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 100px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: toastSlideIn 300ms ease forwards;
+}
+
+.rss-toast svg {
+    flex-shrink: 0;
+    stroke: var(--color-bg);
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
