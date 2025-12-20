@@ -55,7 +55,7 @@
         </svg>
       </a>
       <a
-        href="https://linkedin.com/in/navadeepnaidu7"
+        href="https://linkedin.com/in/navadeepnaidu"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
