@@ -25,14 +25,9 @@
         understanding problems deeply before reaching for solutions.
     </p>
 
-    <h2>Why This Blog</h2>
-
+    <h2>Contact</h2>
     <p>
-        In a world of short-form content, I wanted a space for considered writing. A place where 
-        ideas can develop fully, owned entirely by me.
-    </p>
-
-    <p>
-        No algorithms. No engagement metrics. Just writing.
+        Feel free to reach out to me on <a href="https://x.com/navadeep_naidu7" target="_blank" rel="noopener noreferrer">Twitter</a> 
+        or connect with me on <a href="https://www.linkedin.com/in/navadeepnaidu/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
     </p>
 </div>
