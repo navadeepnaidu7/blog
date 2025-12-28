@@ -4,7 +4,7 @@ date: "2025-06-30"
 description: "An in depth exploration of Twitter's Snowflake ID generation system, its architecture and role in scalable, distributed applications."
 tags: ["Distributed Systems", "Medium Archive"]
 category: "Engineering"
-canonical: "https://blog.navadeepnaidu.com/blog/hello-world"
+canonical: "https://medium.com/@navadeepnaidu7/decoding-twitter-snowflake-92c75d150fa9"
 draft: false
 ---
 
