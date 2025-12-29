@@ -6,7 +6,7 @@
 
     let { data }: { data: PageData } = $props();
     
-    const readingTime = calculateReadingTime(data.meta.description || '');
+    const readingTime = $derived(calculateReadingTime(data.rawContent || ''));
 </script>
 
 <SEO 
@@ -40,7 +40,7 @@
     </header>
 
     <div class="article-content">
-        <svelte:component this={data.content} />
+        {@render data.content()}
     </div>
 
     {#if data.meta.tags && data.meta.tags.length > 0}
