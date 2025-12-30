@@ -567,6 +567,36 @@ pre :global(.shiki) {
     color: var(--color-fg);
 }
 
+.footer-fork {
+    max-width: var(--max-width-wide);
+    margin: 0 auto;
+    padding: 24px var(--padding-x) 0;
+    display: flex;
+    justify-content: center;
+}
+
+.fork-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-muted);
+    background-color: var(--color-bg-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all var(--transition);
+    border: 1px solid var(--color-border);
+}
+
+.fork-btn:hover {
+    color: var(--color-fg);
+    background-color: var(--color-hover-bg);
+    border-color: var(--color-muted);
+}
+
 .home-intro {
     margin-bottom: 32px;
 }

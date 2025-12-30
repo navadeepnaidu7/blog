@@ -50,10 +50,9 @@ Check the [repository](https://github.com/navadeepnaidu7/blog) for more details.
 **Code Example**
 A simple example to test syntax highlighting:
 
-```java
-public static String greet(String name) {
-    return "Hello world";
-}
+```python
+def hello_world():
+    print("Hello, World!")
 ```
 
 

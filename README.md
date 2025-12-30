@@ -1,38 +1,44 @@
-# sv
+A minimal, fast and distraction-free blog built with SvelteKit. This repository contains both the blog template and my personal content.
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+## Tech Stack
 
-## Creating a project
+- **SvelteKit** - Framework
+- **TypeScript** - Type safety
+- **mdsvex** - Markdown processing
+- **Shiki** - Syntax highlighting
+- **Cloudflare Pages** - Hosting
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Project Structure
 
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+```
+src/
+├── content/posts/          # Blog posts (markdown files)
+├── lib/
+│   ├── components/         # Reusable components
+│   └── utils/              # Utility functions
+├── routes/                 # SvelteKit routes
+└── app.css                 # Global styles
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Development
 
 ```sh
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
 ## Building
-
-To create a production version of your app:
 
 ```sh
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+## License
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+The **blog template** (code, structure, and design) is licensed under the [MIT License](LICENSE) - free to use, modify, and distribute.
+
+The **blog content** (all markdown files in `src/content/posts/`) is copyrighted. You may reference, quote, or share excerpts with attribution, but you may not republish entire posts or use the content commercially.
+
+---
+
+Feel free to fork this repository and use it as a template for your own blog. Just replace the content with your own writing!
