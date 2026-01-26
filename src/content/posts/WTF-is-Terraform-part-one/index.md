@@ -1,11 +1,11 @@
 ---
 title: "WTF is Terraform and why Infrastructure as Code matters? "
-date: "2026-01-26"
-description: "An in depth exploration of Twitter's Snowflake ID generation system, its architecture and role in scalable, distributed applications."
+date: "2026-01-27"
+description: "An introduction to Terraform and Infrastructure as Code. Part one of two part series."
 tags: ["DevOps", "IaC", "Medium Archive"]
 category: "Engineering"
-canonical: "https://blog.navadeepnaidu.com/blog/wtf-is-terraform-and-why-infrastructure-as-code-matters-part-one"
-draft: true
+canonical: "https://blog.navadeepnaidu.com/blog/WTF-is-Terraform-part-one"
+draft: false
 ---
 
 Terraform is an Infrastructure as Code tool for defining and managing cloud infrastructure. This article focuses on why such a tool became necessary and problems it was designed to solve.
