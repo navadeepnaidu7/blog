@@ -601,11 +601,49 @@ pre :global(.shiki) {
     margin-bottom: 32px;
 }
 
+.intro-layout {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.profile-image-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    order: 2;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+    cursor: pointer;
+}
+
+.status-tooltip {
+    position: fixed;
+    background-color: var(--color-fg);
+    color: var(--color-bg);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, 0);
+}
+
 .home-intro p {
     font-size: 20px;
     line-height: 1.7;
     color: var(--color-fg-secondary);
     margin: 0;
+    flex: 1;
+    order: 1;
 }
 
 .home-intro strong {
@@ -734,7 +772,7 @@ pre :global(.shiki) {
     font-family: var(--font-sans);
     font-size: 13px;
     color: var(--color-subtle);
-    margin-bottom: 2px;
+    margin-bottom: 6px;
     display: block;
     transition: color var(--transition-slow);
 }
@@ -745,6 +783,7 @@ pre :global(.shiki) {
     font-weight: 400;
     color: var(--color-fg);
     line-height: 1.35;
+    margin-top: 0;
     margin-bottom: 8px;
     transition: color var(--transition);
     letter-spacing: -0.01em;
@@ -1167,6 +1206,21 @@ pre :global(.shiki) {
     .footer-social a {
         padding: 12px;
         margin: -12px;
+    }
+
+    .intro-layout {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profile-image-wrapper {
+        display: none;
+    }
+
+    .home-intro p {
+        font-size: 18px;
     }
 }
 
