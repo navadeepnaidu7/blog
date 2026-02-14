@@ -159,4 +159,3 @@ If you want references while reading or after you can take a look on these resou
 - [HashiCorp’s Terraform introduction (company that built Terraform)](https://developer.hashicorp.com/terraform/intro)
 - ["Terraform explained in 15 mins" By Tech World with Nana (YouTube)](https://youtu.be/l5k1ai_GBDE?si=2Tx7-Cb9IIWxrvXd)
 
----

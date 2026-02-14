@@ -1,7 +1,29 @@
 <script lang="ts">
   import { browser } from "$app/environment";
+  import { onMount } from "svelte";
 
   let showRssToast = $state(false);
+  let readingMode = $state(false);
+
+  onMount(() => {
+    // Load reading mode preference from localStorage
+    const savedMode = localStorage.getItem("reading-mode");
+    if (savedMode === "true") {
+      readingMode = true;
+      document.documentElement.setAttribute("data-reading-mode", "true");
+    }
+  });
+
+  function toggleReadingMode() {
+    readingMode = !readingMode;
+    if (readingMode) {
+      document.documentElement.setAttribute("data-reading-mode", "true");
+      localStorage.setItem("reading-mode", "true");
+    } else {
+      document.documentElement.removeAttribute("data-reading-mode");
+      localStorage.setItem("reading-mode", "false");
+    }
+  }
 
   async function handleRssClick(e: MouseEvent) {
     e.preventDefault();
@@ -83,14 +105,23 @@
       </button>
     </div>
   </div>
-  <div class="footer-fork">
+  <div class="footer-actions">
     <a
       href="https://github.com/navadeepnaidu7/blog"
       target="_blank"
       rel="noopener noreferrer"
       class="fork-btn"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <line x1="6" y1="3" x2="6" y2="15"></line>
         <circle cx="18" cy="6" r="3"></circle>
         <circle cx="6" cy="18" r="3"></circle>
@@ -98,6 +129,40 @@
       </svg>
       Fork this template
     </a>
+    <button
+      class="reading-mode-btn"
+      onclick={toggleReadingMode}
+      aria-label="Toggle reading mode"
+      aria-pressed={readingMode}
+    >
+      <div class="reading-icon-wrapper">
+        <svg
+          class="reading-icon-outline"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        </svg>
+        <svg
+          class="reading-icon-fill"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        </svg>
+      </div>
+      Reading Mode
+    </button>
   </div>
 </footer>
 
