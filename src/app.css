@@ -588,7 +588,7 @@ pre :global(.shiki) {
 
 .footer-social {
     display: flex;
-    gap: 24px;
+    gap: 18px;
 }
 
 .footer-social a {
