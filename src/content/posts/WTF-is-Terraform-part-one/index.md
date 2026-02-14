@@ -6,6 +6,7 @@ tags: ["DevOps", "IaC", "Medium Archive"]
 category: "Engineering"
 canonical: "https://blog.navadeepnaidu.com/blog/WTF-is-Terraform-part-one"
 draft: false
+image: "/content/posts/WTF-is-Terraform-part-one/what-terraform-does.png"
 ---
 
 Terraform is an Infrastructure as Code tool for defining and managing cloud infrastructure. This article focuses on why such a tool became necessary and problems it was designed to solve.
@@ -20,7 +21,7 @@ This article is written for:
 
 You don’t need prior experience with Terraform.
 
-You *should* be comfortable with basic ideas like servers, networks and cloud in general. If you’ve launched an EC2 instance or created a DB from a cloud console you are ready.
+You _should_ be comfortable with basic ideas like servers, networks and cloud in general. If you’ve launched an EC2 instance or created a DB from a cloud console you are ready.
 
 This article explains **what Terraform is and why it exists**, without diving into internals yet. A deeper technical breakdown will follow in the next part.
 
@@ -40,7 +41,7 @@ Over time, infra becomes a collection of manual decisions like,
 
 \> A permission changed directly in prod
 
-None of this is documented in a reliable way. The cloud console shows **what** exists, but not ***why*** it exists or ***how*** it got there.
+None of this is documented in a reliable way. The cloud console shows **what** exists, but not **_why_** it exists or **_how_** it got there.
 
 When something breaks, we often discover that no one fully understands the system anymore. Infrastructure becomes fragile and changes now become risky or straight up unpredictable.
 
@@ -74,7 +75,7 @@ This makes infrastructure reproducible. Teams share a single source of truth. Ne
 
 ## What Terraform does differently
 
-Terraform takes a declarative approach. Instead of telling the system ***how*** to create infrastructure step by step, you describe ***what the final infrastructure should look like***. You define the desired state and it figures out how to reach it.
+Terraform takes a declarative approach. Instead of telling the system **_how_** to create infrastructure step by step, you describe **_what the final infrastructure should look like_**. You define the desired state and it figures out how to reach it.
 
 Terraform compares what you want with what actually exists and executes the difference. Only the required changes are applied.
 
@@ -86,7 +87,7 @@ This is why Terraform scales better than scripts as systems grow.
 
 Infrastructure exists outside your code, so Terraform needs a way to remember what it has already created and how those resources relate to the configuration you write. Terraform solves this using "state".
 
-State is a structured record that maps resources defined in Terraform configuration to actual infrastructure objects in the cloud. By consulting state Terraform can determine 
+State is a structured record that maps resources defined in Terraform configuration to actual infrastructure objects in the cloud. By consulting state Terraform can determine
 
 \> whether a resource already exists
 
@@ -125,17 +126,17 @@ Terraform is not made to manage everything.
 
 Terraform is not meant for deploying applications or managing frequent runtime changes. It works best when infrastructure changes are planned and controlled, not when system behavior needs constant adjustment.
 
-In practice, Terraform rarely stands alone. It defines *what infrastructure should exist,* servers, networks, databases and permissions. Tools like **Ansible** is frequently paired with Terraform, where Terraform creates the infrastructure and Ansible takes configures it by installing software, managing services and applying OS level changes.
+In practice, Terraform rarely stands alone. It defines _what infrastructure should exist,_ servers, networks, databases and permissions. Tools like **Ansible** is frequently paired with Terraform, where Terraform creates the infrastructure and Ansible takes configures it by installing software, managing services and applying OS level changes.
 
 Observability tools like **Grafana** and **Prometheus** operate at a different layer. They do not create or configure infrastructure; they continuously observe it, providing visibility into how the system behaves over time.
 
-Used together, these tools form a clear separation of concerns. Terraform defines structure, Ansible shapes behavior and observability tools provide feedback. 
+Used together, these tools form a clear separation of concerns. Terraform defines structure, Ansible shapes behavior and observability tools provide feedback.
 
 ---
 
 ## What comes next
 
-This article focused on the **why** part behind Terraform. In the next part we will look at **how** Terraform actually works. 
+This article focused on the **why** part behind Terraform. In the next part we will look at **how** Terraform actually works.
 
 You’ll get answers for questions like:
 
@@ -153,7 +154,7 @@ That deep dive focuses on understanding Terraform’s internal model.
 
 ## Suggested resources (optional)
 
-If you want references while reading or after you can take a look on these resources. 
+If you want references while reading or after you can take a look on these resources.
 
 - [HashiCorp’s Terraform introduction (company that built Terraform)](https://developer.hashicorp.com/terraform/intro)
 - ["Terraform explained in 15 mins" By Tech World with Nana (YouTube)](https://youtu.be/l5k1ai_GBDE?si=2Tx7-Cb9IIWxrvXd)

@@ -6,12 +6,12 @@ tags: ["Distributed Systems", "Medium Archive"]
 category: "Engineering"
 canonical: "https://medium.com/@navadeepnaidu7/decoding-twitter-snowflake-92c75d150fa9"
 draft: false
+image: "/content/posts/decoding-twitter-snowflake/snowflake.png"
 ---
 
 A few weeks ago, while scrolling twitter and sharing some tweets I randomly thought about long random numbers at the end of every tweet URL. Unlike YouTube's base-62 encoded URLs these were just digits, no letters, no mixed case. At first glance, it didn't look like a simple incremental counter and the numbers seemed structured yet unpredictable. I got curious and that got me thinking how does Twitter generate unique IDs at such a massive scale?
 
 ![Snoflake Visual](/content/posts/decoding-twitter-snowflake/snowflake.png)
-
 
 ## Breaking Down Twitter Snowflake ID
 
@@ -178,8 +178,8 @@ result = decode_snowflake(1900547158165840235)
 print(result)
 
 # This should output something like:
-# {'timestamp_utc': '2025-03-14 13:58:47.622000 ', 
-#  'machine_id': 422, 
+# {'timestamp_utc': '2025-03-14 13:58:47.622000 ',
+#  'machine_id': 422,
 #  'sequence': 363,
 #  'raw_timestamp_ms': 1741960727622
 # }
