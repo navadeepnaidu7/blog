@@ -1024,8 +1024,11 @@ pre :global(.shiki) {
 
 .article-header {
     max-width: var(--max-width);
-    margin: 0 auto 48px;
+    margin: 0 auto 24px;
     padding: 0 var(--padding-x);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .article-title {
@@ -1033,7 +1036,7 @@ pre :global(.shiki) {
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.03em;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     transition: color var(--transition-slow);
 }
 

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { browser } from '$app/environment';
+    import ListenButton from '$lib/components/ListenButton.svelte';
     import SEO from '$lib/components/SEO.svelte';
     import { formatDate } from '$lib/utils/posts';
     import { calculateReadingTime, formatReadingTime } from '$lib/utils/reading-time';
@@ -247,6 +248,7 @@
             <span class="meta-separator"></span>
             <span>{formatReadingTime(readingTime)}</span>
         </div>
+        <ListenButton content={data.rawContent || ''} />
     </header>
 
     <div class="article-content">
