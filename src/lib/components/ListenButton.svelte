@@ -28,6 +28,11 @@
     let segmentDurationMs = 1;
     let segmentStartTs = 0;
 
+    let isSeeking = false;
+    let wasPlayingBeforeSeek = false;
+    let wasPausedBeforeSeek = false;
+    let pauseOnStartAfterSeek = false;
+
     const speedLabel = $derived(`${rate % 1 === 0 ? rate.toFixed(0) : rate.toFixed(2).replace(/0$/, '')}x`);
 
     const remainingLabel = $derived.by(() => {
@@ -111,6 +116,10 @@
         rafId = requestAnimationFrame(updateProgressFromClock);
     }
 
+    function clampPercent(value: number): number {
+        return Math.max(0, Math.min(99.5, value));
+    }
+
     function cancelSpeech() {
         playbackToken += 1;
         clearProgressLoop();
@@ -133,7 +142,7 @@
             return;
         }
 
-        const clampedPercent = Math.max(0, Math.min(99.5, startPercent));
+        const clampedPercent = clampPercent(startPercent);
         const startIndex = Math.floor((clampedPercent / 100) * fullText.length);
         const playbackText = fullText.slice(startIndex).trim();
 
@@ -169,6 +178,11 @@
             isPaused = false;
             statusText = 'Playing';
             beginProgressLoop();
+
+            if (pauseOnStartAfterSeek) {
+                pauseOnStartAfterSeek = false;
+                pauseReading();
+            }
         };
 
         utterance.onend = () => {
@@ -258,6 +272,117 @@
         statusText = `Speed ${speedLabel}`;
     }
 
+    function getPercentFromClientX(eventX: number, track: HTMLElement): number {
+        const rect = track.getBoundingClientRect();
+        if (!rect.width) {
+            return progress;
+        }
+
+        return clampPercent(((eventX - rect.left) / rect.width) * 100);
+    }
+
+    function seekFromPercent(nextPercent: number) {
+        progress = clampPercent(nextPercent);
+
+        if (wasPlayingBeforeSeek || wasPausedBeforeSeek) {
+            pauseOnStartAfterSeek = wasPausedBeforeSeek;
+            startFromPercent(progress);
+        } else {
+            statusText = 'Ready';
+        }
+
+        wasPlayingBeforeSeek = false;
+        wasPausedBeforeSeek = false;
+    }
+
+    function handleSeekPointerDown(event: PointerEvent) {
+        if (!supported) {
+            return;
+        }
+
+        const track = event.currentTarget;
+        if (!(track instanceof HTMLElement)) {
+            return;
+        }
+
+        event.preventDefault();
+        track.setPointerCapture(event.pointerId);
+
+        isSeeking = true;
+        wasPlayingBeforeSeek = isPlaying;
+        wasPausedBeforeSeek = isPaused;
+
+        if (isPlaying || isPaused) {
+            cancelSpeech();
+            isPlaying = false;
+            isPaused = false;
+        }
+
+        progress = getPercentFromClientX(event.clientX, track);
+    }
+
+    function handleSeekPointerMove(event: PointerEvent) {
+        if (!isSeeking) {
+            return;
+        }
+
+        const track = event.currentTarget;
+        if (!(track instanceof HTMLElement)) {
+            return;
+        }
+
+        progress = getPercentFromClientX(event.clientX, track);
+    }
+
+    function handleSeekPointerUp(event: PointerEvent) {
+        if (!isSeeking) {
+            return;
+        }
+
+        const track = event.currentTarget;
+        if (!(track instanceof HTMLElement)) {
+            return;
+        }
+
+        if (track.hasPointerCapture(event.pointerId)) {
+            track.releasePointerCapture(event.pointerId);
+        }
+
+        isSeeking = false;
+        seekFromPercent(progress);
+    }
+
+    function handleSeekKeydown(event: KeyboardEvent) {
+        const step = event.shiftKey ? 10 : 5;
+        let nextPercent: number | null = null;
+
+        if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+            nextPercent = progress + step;
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+            nextPercent = progress - step;
+        } else if (event.key === 'Home') {
+            nextPercent = 0;
+        } else if (event.key === 'End') {
+            nextPercent = 99.5;
+        }
+
+        if (nextPercent === null) {
+            return;
+        }
+
+        event.preventDefault();
+        wasPlayingBeforeSeek = isPlaying;
+        wasPausedBeforeSeek = isPaused;
+
+        if (isPlaying || isPaused) {
+            cancelSpeech();
+            isPlaying = false;
+            isPaused = false;
+        }
+
+        seekFromPercent(nextPercent);
+    }
+
     onMount(() => {
         supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
         fullText = getArticleText();
@@ -308,7 +433,20 @@
     <div class="progress-panel">
         <span class="sr-only" role="status" aria-live="polite">{statusText}</span>
         <span class="sr-only">{Math.round(progress)}% complete, {remainingLabel} remaining</span>
-        <div class="progress-track" aria-hidden="true">
+        <div
+            class="progress-track"
+            role="slider"
+            tabindex="0"
+            aria-label="Seek audio"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={Math.round(progress)}
+            onpointerdown={handleSeekPointerDown}
+            onpointermove={handleSeekPointerMove}
+            onpointerup={handleSeekPointerUp}
+            onpointercancel={handleSeekPointerUp}
+            onkeydown={handleSeekKeydown}
+        >
             <div class="progress-fill" style={`width: ${progress}%;`}></div>
         </div>
     </div>
@@ -346,7 +484,7 @@
         padding: 0 14px;
         border: 1px solid var(--color-border);
         border-radius: 999px;
-        background: color-mix(in srgb, var(--color-bg) 76%, var(--color-bg-secondary));
+        background: color-mix(in srgb, var(--color-bg) 74%, var(--color-bg-secondary));
         color: var(--color-fg);
         display: inline-flex;
         align-items: center;
@@ -375,13 +513,14 @@
 
     .play-btn:hover,
     .speed-btn:hover {
-        background: color-mix(in srgb, var(--color-bg) 68%, var(--color-bg-secondary));
-        border-color: color-mix(in srgb, var(--color-border) 72%, var(--color-fg) 28%);
+        background: color-mix(in srgb, var(--color-bg-secondary) 84%, var(--color-bg));
+        border-color: color-mix(in srgb, var(--color-border) 65%, var(--color-fg) 35%);
     }
 
     .play-btn:active,
     .speed-btn:active {
-        background: color-mix(in srgb, var(--color-bg-secondary) 76%, var(--color-bg));
+        background: color-mix(in srgb, var(--color-bg-secondary) 90%, var(--color-bg));
+        border-color: color-mix(in srgb, var(--color-border) 60%, var(--color-fg) 40%);
     }
 
     .play-btn:focus-visible,
@@ -410,6 +549,13 @@
         border-radius: 999px;
         overflow: hidden;
         background: color-mix(in srgb, var(--color-border) 70%, var(--color-bg));
+        cursor: pointer;
+        outline: none;
+    }
+
+    .progress-track:focus-visible {
+        outline: 2px solid var(--color-link);
+        outline-offset: 2px;
     }
 
     .progress-fill {
