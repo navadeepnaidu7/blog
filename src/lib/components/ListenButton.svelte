@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { browser } from '$app/environment';
     import { onDestroy, onMount } from 'svelte';
 
     interface Props {
@@ -125,7 +126,7 @@
         clearProgressLoop();
         currentUtterance = null;
 
-        if ('speechSynthesis' in window) {
+        if (browser && 'speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }
     }
